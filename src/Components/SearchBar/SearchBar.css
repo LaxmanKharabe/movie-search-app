@@ -1,0 +1,41 @@
+.searchBar {
+    display: flex;
+    flex-direction: column;
+    place-items: center;
+}
+
+.inputBox {
+    width: 100%;
+    position: relative;
+    display: flex;
+}
+
+.inputBox input {
+    width: 100%;
+    outline: none;
+    border-bottom: 2px solid #9c27b0;
+    border-right: none;
+    padding: 5px;
+    height: 20px;
+    border-radius: 5px 0 0 5px;
+}
+
+.inputBox input:focus {
+    color: black;
+}
+
+.inputBox button {
+    width: 40px;
+    height: 36px;
+    border: 1px solid #9c27b0;
+    background: #9c27b0;
+    text-align: center;
+    color: #fff;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+    font-size: 20px;
+}
+/* 
+.wrap {
+    width: 70%;
+} */

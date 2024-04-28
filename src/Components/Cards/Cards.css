@@ -1,0 +1,48 @@
+.cards{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    padding: 5px;
+    margin: 10px;
+    background-color: #282c34;
+    border-radius: 10px;
+    position: relative;
+    cursor: pointer;
+}
+.heding{
+    font-size: 12px;
+}
+.postImg{
+    width: 98%;
+    height: 90%;
+    border-radius: 10px;
+}
+.cards:hover{
+    transition: all 2sec;
+    background-color: white;
+    color: black;
+}
+
+@media (max-width: 550px){
+    .cards{
+        width: 46%;
+        display: flex;
+    }
+    .postImg{
+        border-radius: 10px;
+    }
+    .heding{
+        width: 100%;
+        text-align: center;
+        font-size: 17px;
+        padding: 8px 0;
+    }
+    .date{
+        display: flex;
+        justify-content: space-between;
+        padding: 0 2px;
+    }
+}
