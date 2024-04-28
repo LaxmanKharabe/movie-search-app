@@ -10,11 +10,6 @@ const MoviesList = () => {
   const { data, isLoading, error } = useFetchMoviesQuery(currentPage);
   const [searchData, setSearchData] = useState(null);
   const [selectedMovie, setSelectedMovie] = useState(null); 
-
-  const getChildData = (dataFromChild) => {
-    setSearchData(dataFromChild);
-  };
-
   if (isLoading) return <p>Loading...</p>;
   if (error) return <p>{error.message}</p>;
 
@@ -35,7 +30,7 @@ const MoviesList = () => {
   return (
     <div className="moviesContainer">
       <div>
-        <SearchBar sendDataToParent={getChildData} handleCardClick={handleCardClick} />
+        <SearchBar handleCardClick={handleCardClick} />
       </div>
       <div>
         {selectedMovie ? ( 

@@ -1,35 +1,42 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSearchMoviesQuery } from '../../redux/features/movieData';
 import Cards from '../Cards/Cards';
 import './SearchBar.css';
 import { useNavigate } from 'react-router-dom';
 
-const SearchBar = ({ sendDataToParent }) => {
+const SearchBar = () => {
   const navigate = useNavigate();
   const [searchText, setSearchText] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
+  const [message, setMessage] = useState('');
+  const [hasSearched, setHasSearched] = useState(false);
   const { data, isLoading, error } = useSearchMoviesQuery(searchTerm);
-  const [message, setMessage] = useState('')
 
   if (error) {
     return <div>Error: {error.message}</div>;
   }
 
-  const handleSearch = () => {
+  const handleSearch = async () => {
     setSearchTerm(searchText.trim());
-    if (searchTerm !== '' && data.total_results < 1) {
-      setMessage('Movie not found');
-    }
+    setHasSearched(true);
   };
 
   const handleChange = (e) => {
     setSearchText(e.target.value);
-    sendDataToParent(data);
   };
 
   const handleCardClick = (movieId) => {
     navigate(`/movie/${movieId}`);
   };
+  useEffect(() => {
+    if (hasSearched && !isLoading && data) {
+      if (data.total_results === 0) {
+        setMessage('No search results found.');
+      } else {
+        setMessage('');
+      }
+    }
+  }, [hasSearched, isLoading, data]);
 
   return (
     <div className='searchBar'>
@@ -40,16 +47,16 @@ const SearchBar = ({ sendDataToParent }) => {
             {isLoading ? 'Searching...' : <i className="bi bi-search"></i>}
           </button>
         </div>
+        <p style={{ color: 'red' }}>{message}</p>
       </div>
       <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
-        <p style={{color: "red"}}>{message}</p>
-        {data && data.results.map((movieDetails) => (
-          <Cards key={movieDetails.id} movieDetails={movieDetails} onClick={() => handleCardClick(movieDetails.id)} />
-        ))}
+        {data && data.total_results > 0 ? (
+          data.results.map((movieDetails) => (
+            <Cards key={movieDetails.id} movieDetails={movieDetails} onClick={() => handleCardClick(movieDetails.id)} />
+          ))
+        ) : null}
       </div>
     </div>
   );
 };
-
 export default SearchBar;
-
